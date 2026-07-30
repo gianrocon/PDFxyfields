@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDFxyfields - Simulação A4 & Mapeamento de Coordenadas PDF</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Google Fonts: Inter & Monospace Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Consolas&family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- PDF.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body class="dark-theme">
+
+  <!-- TOP HEADER -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <span>PDF<span class="highlight">xy</span>fields</span>
+      </div>
+      <div class="pdf-file-badge" id="pdf-file-badge">
+        <span class="file-icon">📄</span>
+        <span class="file-name" id="current-file-name">Página A4 (Simulação Padrão)</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="zoom-controls">
+        <button id="btn-zoom-out" title="Reduzir Zoom (Ctrl + -)">-</button>
+        <span id="zoom-level">100%</span>
+        <button id="btn-zoom-in" title="Aumentar Zoom (Ctrl + +)">+</button>
+        <button id="btn-zoom-fit" title="Ajustar à Tela">Ajustar</button>
+      </div>
+      <div class="grid-toggle">
+        <label class="toggle-container" title="Exibir Grade de Coordenadas PDF (pt)">
+          <input type="checkbox" id="toggle-grid" checked>
+          <span class="toggle-slider"></span>
+          <span class="toggle-label">Grade (pt)</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <input type="file" id="pdf-file-input" accept="application/pdf" style="display: none;">
+      <button class="btn btn-secondary" id="btn-open-pdf">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Abrir PDF
+      </button>
+      <input type="file" id="json-file-input" accept=".json" style="display: none;">
+      <button class="btn btn-secondary" id="btn-import-json">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Carregar JSON
+      </button>
+      <button class="btn btn-primary" id="btn-export-json">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Salvar JSON
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT THREE COLUMNS -->
+  <div class="app-body">
+    
+    <!-- LEFT SIDEBAR: COORDINATE CREATION -->
+    <aside class="sidebar sidebar-left">
+      <div class="sidebar-header">
+        <h3>📍 Mapeamento & Criação</h3>
+      </div>
+      
+      <div class="sidebar-section">
+        <div class="card coords-card">
+          <div class="card-title">Coordenadas em Tempo Real (PDF)</div>
+          <div class="coords-display">
+            <div class="coord-box">
+              <span class="coord-label">X (Largura)</span>
+              <span class="coord-value" id="live-x">0.0 <small>pt</small></span>
+              <span class="coord-sub" id="live-x-mm">0.0 mm</span>
+            </div>
+            <div class="coord-box">
+              <span class="coord-label">Y (Altura - Inf.)</span>
+              <span class="coord-value" id="live-y">0.0 <small>pt</small></span>
+              <span class="coord-sub" id="live-y-mm">0.0 mm</span>
+            </div>
+          </div>
+          <div class="info-note">
+            💡 <strong>Padrão PDF</strong>: Origem (0,0) no canto <em>inferior esquerdo</em>.
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="card create-card">
+          <div class="card-title">Criar Novo Campo</div>
+          
+          <div class="selected-point-badge" id="selected-point-status">
+            <span class="status-dot"></span>
+            <span id="selected-point-text">Clique na página A4 para selecionar um ponto</span>
+          </div>
+
+          <div class="form-group">
+            <label for="field-label-input">Nome do Campo (Label):</label>
+            <input type="text" id="field-label-input" placeholder="Ex: Nome_Paciente, CPF, Data" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label for="field-length-input">Comprimento Padrão (Caracteres):</label>
+            <input type="number" id="field-length-input" value="10" min="1" max="200">
+          </div>
+
+          <button class="btn btn-create btn-full" id="btn-create-field" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Criar Campo Aqui
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-section page-info-section">
+        <div class="card page-card">
+          <div class="card-title">Dimensões da Página A4</div>
+          <div class="dimension-list">
+            <div class="dim-item"><span>Largura:</span> <strong>595.28 pt</strong> (210 mm)</div>
+            <div class="dim-item"><span>Altura:</span> <strong>841.89 pt</strong> (297 mm)</div>
+            <div class="dim-item"><span>Página Atual:</span> <strong id="pdf-page-num">1 / 1</strong></div>
+          </div>
+          <div class="page-nav" id="page-nav-controls" style="display:none;">
+            <button class="btn btn-sm" id="btn-prev-page">◄ Ant.</button>
+            <button class="btn btn-sm" id="btn-next-page">Próx. ►</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER VIEWPORT: A4 CANVAS SIMULATION -->
+    <main class="viewport-container" id="viewport-container">
+      <div class="a4-page-wrapper" id="a4-page-wrapper">
+        <!-- PDF Render Canvas -->
+        <canvas id="pdf-canvas"></canvas>
+        
+        <!-- Grid Canvas Overlay -->
+        <canvas id="grid-canvas"></canvas>
+        
+        <!-- Interactive Fields & Click Layer -->
+        <div class="interactive-layer" id="interactive-layer">
+          <!-- Pin marker for current clicked point (L-shape symbol) -->
+          <div class="click-pin-marker" id="click-pin-marker" style="display: none;">
+            <svg class="pin-l-symbol" width="28" height="28" viewBox="0 0 28 28">
+              <!-- Outline stroke for visibility on dark/light background -->
+              <path d="M 2 -22 L 2 2 L 24 2" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Main L-shape stroke -->
+              <path d="M 2 -22 L 2 2 L 24 2" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Vertex highlight dot at (2,2) -->
+              <circle cx="2" cy="2" r="3" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+            </svg>
+            <div class="pin-coords-badge" id="pin-coords-text">X: 0, Y: 0</div>
+          </div>
+
+          <!-- Dynamic Field Overlays will be appended here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT SIDEBAR: FIELD LIST & TOOLS PANEL -->
+    <aside class="sidebar sidebar-right">
+      
+      <!-- TOP PART OF RIGHT SIDEBAR: LIST OF CREATED FIELDS -->
+      <div class="sidebar-section fields-list-section">
+        <div class="sidebar-header">
+          <h3>📋 Campos (<span id="fields-count">0</span>)</h3>
+          <div class="fields-list-actions">
+            <button class="btn btn-xs btn-secondary" id="btn-show-all" title="Visualizar todos os campos no PDF">👁️ Todos</button>
+            <button class="btn btn-xs btn-secondary" id="btn-hide-all" title="Ocultar todos os campos no PDF">🙈 Nenhum</button>
+            <button class="btn btn-xs btn-danger" id="btn-clear-all" title="Remover todos os campos">Limpar</button>
+          </div>
+        </div>
+        <div class="fields-list" id="fields-list">
+          <div class="empty-fields-msg" id="empty-fields-msg">
+            Nenhum campo criado ainda.<br>Clique em um ponto na página A4 para adicionar.
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM PART OF RIGHT SIDEBAR: TOOLS PANEL (ACTIVE WHEN FIELD IS SELECTED) -->
+      <div class="sidebar-section tools-section" id="tools-section">
+        <div class="sidebar-header">
+          <h3>🛠️ Ferramentas do Campo</h3>
+          <span class="active-field-badge" id="active-field-badge">Nenhum Selecionado</span>
+        </div>
+
+        <div class="tools-content" id="tools-content">
+          <div class="no-selection-placeholder" id="no-selection-placeholder">
+            👈 Selecione um campo na lista acima ou no PDF para editar suas propriedades.
+          </div>
+
+          <div class="tools-panel" id="tools-panel" style="display: none;">
+            
+            <!-- 0. POSITION CONTROLS & DIRECT X, Y INPUT (FIRST BLOCK) -->
+            <div class="tool-group">
+              <label class="tool-label">Posição do Campo (Coordenadas X, Y pt):</label>
+              
+              <div class="nudge-section">
+                <div class="nudge-row">
+                  <span class="nudge-axis">X (Largura):</span>
+                  <div class="nudge-btn-group">
+                    <button class="btn btn-nudge" id="btn-nudge-x-dec-10">-1.0</button>
+                    <button class="btn btn-nudge" id="btn-nudge-x-dec-01">-0.1</button>
+                    <input type="text" id="input-coord-x" class="nudge-input-val" value="100,0" placeholder="X pt" title="Digite a coordenada X (aceita vírgula)">
+                    <button class="btn btn-nudge" id="btn-nudge-x-inc-01">+0.1</button>
+                    <button class="btn btn-nudge" id="btn-nudge-x-inc-10">+1.0</button>
+                  </div>
+                </div>
+
+                <div class="nudge-row">
+                  <span class="nudge-axis">Y (Altura - Inf.):</span>
+                  <div class="nudge-btn-group">
+                    <button class="btn btn-nudge" id="btn-nudge-y-dec-10">-1.0</button>
+                    <button class="btn btn-nudge" id="btn-nudge-y-dec-01">-0.1</button>
+                    <input type="text" id="input-coord-y" class="nudge-input-val" value="650,0" placeholder="Y pt" title="Digite a coordenada Y (aceita vírgula)">
+                    <button class="btn btn-nudge" id="btn-nudge-y-inc-01">+0.1</button>
+                    <button class="btn btn-nudge" id="btn-nudge-y-inc-10">+1.0</button>
+                  </div>
+                </div>
+
+                <!-- LOCK X & LOCK Y CHECKBOXES -->
+                <div class="lock-coords-row">
+                  <label class="toggle-container lock-check" title="Fixar coordenada X deste campo para o próximo campo criado">
+                    <input type="checkbox" id="chk-lock-x">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">📌 Fixar X para Próximo Campo</span>
+                  </label>
+                  <label class="toggle-container lock-check" title="Fixar coordenada Y deste campo para o próximo campo criado">
+                    <input type="checkbox" id="chk-lock-y">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">📌 Fixar Y para Próximo Campo</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1. FIELD LABEL (NAME) EDIT -->
+            <div class="tool-group">
+              <label class="tool-label" for="tool-field-label">Nome do Campo (Label):</label>
+              <input type="text" id="tool-field-label" placeholder="Ex: CPF_Paciente, Data, etc." autocomplete="off" class="tool-input-text">
+            </div>
+
+            <!-- 0.1 FIELD LENGTH (CHARACTERS) EDIT -->
+            <div class="tool-group">
+              <label class="tool-label" for="tool-field-length">Comprimento (Número de Caracteres):</label>
+              <div class="number-stepper">
+                <button class="btn btn-step" id="btn-length-dec" title="Diminuir 1 caractere">-</button>
+                <input type="number" id="tool-field-length" value="10" min="1" max="200" step="1">
+                <button class="btn btn-step" id="btn-length-inc" title="Aumentar 1 caractere">+</button>
+                <span class="unit-tag">chars</span>
+              </div>
+            </div>
+
+            <!-- 1. SAMPLE STRING & TOGGLE -->
+            <div class="tool-group">
+              <label class="tool-label">Exemplo de Texto (String):</label>
+              <div class="input-with-toggle">
+                <input type="text" id="tool-sample-text" placeholder="Digite uma string de exemplo..." autocomplete="off">
+                <label class="toggle-container" title="Ativar/Desativar Exibição da String no PDF">
+                  <input type="checkbox" id="tool-toggle-sample">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <small class="tool-help">Ative a chave ao lado para ver o texto exato renderizado sobre o PDF.</small>
+            </div>
+
+            <!-- 2. MONOSPACE FONT SELECTOR -->
+            <div class="tool-group">
+              <label class="tool-label">Fonte Monoespaçada:</label>
+              <div class="font-selector-row">
+                <span class="font-preview" id="tool-font-preview" style="font-family: 'Courier New', monospace;">Courier New</span>
+                <button class="btn btn-secondary" id="btn-cycle-font" title="Alternar entre fontes monoespaçadas">
+                  🔠 Alternar Fonte
+                </button>
+              </div>
+            </div>
+
+            <!-- 3. FONT SIZE ADJUSTMENT -->
+            <div class="tool-group">
+              <label class="tool-label">Tamanho da Fonte (pt):</label>
+              <div class="number-stepper">
+                <button class="btn btn-step" id="btn-font-dec">-</button>
+                <input type="number" id="tool-font-size" value="12" min="6" max="72" step="0.5">
+                <button class="btn btn-step" id="btn-font-inc">+</button>
+                <span class="unit-tag">pt</span>
+              </div>
+            </div>
+
+            <!-- 4. CHARACTER LETTER SPACING (+0.1 / -0.1) -->
+            <div class="tool-group">
+              <label class="tool-label">Espaçamento entre Caracteres (Letter-Spacing):</label>
+              <div class="number-stepper">
+                <button class="btn btn-step" id="btn-spacing-dec" title="Diminuir 0.1 pt">-</button>
+                <input type="number" id="tool-letter-spacing" value="0.0" step="0.1">
+                <button class="btn btn-step" id="btn-spacing-inc" title="Aumentar 0.1 pt">+</button>
+                <span class="unit-tag">pt</span>
+              </div>
+            </div>
+
+            <!-- 5. CHARACTER GROUPING (4 INPUTS WITH AUTOMATIC REMAINDER) -->
+            <div class="tool-group">
+              <div class="tool-label-row">
+                <label class="tool-label">Divisão dos Caracteres em Grupos:</label>
+                <span class="badge-info" title="Total de caracteres do campo" id="total-length-badge">Total: 10</span>
+              </div>
+              <small class="tool-help">Ex: Para data DD MM YYYY (8 chars), digite 2 no 1º e 2 no 2º. O resto (4) vai pro próximo.</small>
+              <div class="groups-grid">
+                <div class="group-input-box">
+                  <span>Gr. 1</span>
+                  <input type="number" id="group-1-input" min="0" placeholder="-">
+                </div>
+                <div class="group-input-box">
+                  <span>Gr. 2</span>
+                  <input type="number" id="group-2-input" min="0" placeholder="-">
+                </div>
+                <div class="group-input-box">
+                  <span>Gr. 3</span>
+                  <input type="number" id="group-3-input" min="0" placeholder="-">
+                </div>
+                <div class="group-input-box">
+                  <span>Gr. 4</span>
+                  <input type="number" id="group-4-input" min="0" placeholder="-">
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. GROUP DISTANCES (3 INPUTS WITH DEFAULT = PREV_CHARS * 4 PT) -->
+            <div class="tool-group">
+              <label class="tool-label">Distâncias entre Grupos (pt):</label>
+              <small class="tool-help">Padrão quando vazio: (nº caracteres do grupo anterior) × 4 pt.</small>
+              <div class="distances-grid">
+                <div class="dist-input-box">
+                  <span>Gr 1 ↔ 2</span>
+                  <input type="number" id="dist-1-input" step="0.5" placeholder="Auto">
+                </div>
+                <div class="dist-input-box">
+                  <span>Gr 2 ↔ 3</span>
+                  <input type="number" id="dist-2-input" step="0.5" placeholder="Auto">
+                </div>
+                <div class="dist-input-box">
+                  <span>Gr 3 ↔ 4</span>
+                  <input type="number" id="dist-3-input" step="0.5" placeholder="Auto">
+                </div>
+              </div>
+            </div>
+
+            <!-- DELETE FIELD BUTTON -->
+            <div class="tool-group action-group">
+              <button class="btn btn-danger btn-full" id="btn-delete-field">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                Excluir Este Campo
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

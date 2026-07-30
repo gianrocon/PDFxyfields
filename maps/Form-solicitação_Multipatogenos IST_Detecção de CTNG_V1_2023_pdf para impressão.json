@@ -1,0 +1,379 @@
+{
+  "pdfName": "Form-solicitação_Multipatogenos IST_Detecção de CTNG_V1_2023_pdf para impressão.pdf",
+  "pageSize": {
+    "widthPt": 595.28,
+    "heightPt": 841.89,
+    "unit": "pt"
+  },
+  "fields": [
+    {
+      "id": "field_1785367825867",
+      "label": "instituicao",
+      "x": 21.6,
+      "y": 741.7,
+      "length": 44,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        44,
+        0,
+        0,
+        0
+      ],
+      "groups": [
+        44
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 316.8,
+      "sampleText": "CTA MARYMAR NOVAES",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785369338705",
+      "label": "cnes",
+      "x": 364.1,
+      "y": 741.7,
+      "length": 10,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        10,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        10
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 72,
+      "sampleText": "0072",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785369393378",
+      "label": "prof_solicitante",
+      "x": 21.6,
+      "y": 694.3,
+      "length": 29,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        29,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        29
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 208.8,
+      "sampleText": "Giancarlo Donato Roccon",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785369472380",
+      "label": "conselho_nome",
+      "x": 252.4,
+      "y": 691.8,
+      "length": 3,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        3,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        3
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 21.6,
+      "sampleText": "CRM",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785370634859",
+      "label": "conselho_uf",
+      "x": 284.1,
+      "y": 691.8,
+      "length": 2,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        2,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        2
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 14.4,
+      "sampleText": "BA",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785370693802",
+      "label": "conselho_num",
+      "x": 308.2,
+      "y": 691.8,
+      "length": 6,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        6,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        6
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 43.2,
+      "sampleText": "19285",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785370825155",
+      "label": "data_sol",
+      "x": 34.8,
+      "y": 661,
+      "length": 8,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        2,
+        2,
+        4,
+        0
+      ],
+      "groups": [
+        2,
+        2,
+        4
+      ],
+      "groupDistancesPt": [
+        11,
+        11
+      ],
+      "heightPt": 12,
+      "widthPt": 79.6,
+      "sampleText": "19122026",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785370974783",
+      "label": "cpf_prof",
+      "x": 264,
+      "y": 661,
+      "length": 11,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        11,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        11
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 79.2,
+      "sampleText": "00686535570",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785371522196",
+      "label": "cns_paciente",
+      "x": 21.6,
+      "y": 603.3,
+      "length": 15,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        15,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        15
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 108,
+      "sampleText": "898498535871257",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785371556073",
+      "label": "nome_paciente",
+      "x": 190,
+      "y": 605.4,
+      "length": 44,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        44,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        44
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 316.8,
+      "sampleText": "Giancarlo Donato Roccon",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785371675362",
+      "label": "pref_identificacao",
+      "x": 517.8,
+      "y": 608,
+      "length": 1,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        1,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        1
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 7.2,
+      "sampleText": "2",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785371756523",
+      "label": "cpf_paciente",
+      "x": 21.6,
+      "y": 572.7,
+      "length": 11,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        11,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        11
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 79.2,
+      "sampleText": "00686535570",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785371793297",
+      "label": "nome_social",
+      "x": 190,
+      "y": 572.7,
+      "length": 44,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        44,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        44
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 316.8,
+      "sampleText": "Giancarlo Donato Roccon",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785371843968",
+      "label": "sexo",
+      "x": 517.3,
+      "y": 573.2,
+      "length": 1,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        1,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        1
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 7.2,
+      "sampleText": "M",
+      "showSampleText": true,
+      "visible": true
+    }
+  ]
+}

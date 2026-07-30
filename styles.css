@@ -1,0 +1,927 @@
+/* PDFxyfields - Modern Dark Theme CSS Design System */
+:root {
+  --bg-dark: #0f172a;
+  --bg-sidebar: #1e293b;
+  --bg-card: #334155;
+  --bg-card-hover: #475569;
+  --border-color: #475569;
+  --border-focus: #3b82f6;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+  
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-glow: rgba(59, 130, 246, 0.3);
+  
+  --accent: #10b981;
+  --accent-hover: #059669;
+  
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-bg: rgba(239, 68, 68, 0.25);
+  
+  --warning: #f59e0b;
+  
+  --header-height: 56px;
+  --sidebar-width: 320px;
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono-default: 'Courier New', Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.dark-theme {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOP HEADER */
+.app-header {
+  height: var(--header-height);
+  background-color: var(--bg-sidebar);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.header-left, .header-center, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text-main);
+}
+.logo svg {
+  color: var(--primary);
+}
+.logo .highlight {
+  color: var(--primary);
+}
+
+.pdf-file-badge {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  max-width: 260px;
+}
+.file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-muted);
+}
+
+/* ZOOM & GRID CONTROLS */
+.zoom-controls {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+.zoom-controls button {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.zoom-controls button:hover {
+  background: var(--bg-card);
+}
+#zoom-level {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0 8px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.toggle-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.toggle-container input {
+  display: none;
+}
+.toggle-slider {
+  width: 36px;
+  height: 20px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  position: relative;
+  transition: 0.2s ease;
+}
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 2px;
+  top: 2px;
+  background-color: var(--text-muted);
+  border-radius: 50%;
+  transition: 0.2s ease;
+}
+.toggle-container input:checked + .toggle-slider {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+.toggle-container input:checked + .toggle-slider::before {
+  transform: translateX(16px);
+  background-color: #fff;
+}
+.toggle-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+.btn-secondary {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: var(--bg-card-hover);
+}
+.btn-create {
+  background-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-create:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+.btn-danger {
+  background-color: transparent;
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+  color: #fff;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-full {
+  width: 100%;
+}
+.btn-sm {
+  padding: 3px 8px;
+  font-size: 0.75rem;
+}
+.btn-xs {
+  padding: 2px 6px;
+  font-size: 0.7rem;
+}
+
+/* THREE COLUMN LAYOUT */
+.app-body {
+  display: flex;
+  height: calc(100vh - var(--header-height));
+  overflow: hidden;
+}
+
+/* SIDEBARS */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 10;
+}
+.sidebar-right {
+  border-right: none;
+  border-left: 1px solid var(--border-color);
+}
+
+.sidebar-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(15, 23, 42, 0.4);
+}
+.sidebar-header h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.sidebar-section {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* CARDS */
+.card {
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+}
+.card-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* COORDS DISPLAY */
+.coords-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.coord-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.coord-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.coord-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Fira Code', monospace;
+  color: var(--primary);
+}
+.coord-value small {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.coord-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.info-note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid var(--primary);
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+/* CREATE FIELD CARD */
+.selected-point-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  color: var(--text-muted);
+}
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  width: 100%;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus {
+  border-color: var(--primary);
+}
+
+.dimension-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.dim-item strong {
+  color: var(--text-main);
+}
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* CENTER VIEWPORT CONTAINER */
+.viewport-container {
+  flex: 1;
+  background-color: #0b0f19;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  padding: 40px;
+  user-select: none;
+}
+
+/* A4 PAGE CONTAINER */
+.a4-page-wrapper {
+  margin: auto;
+  position: relative;
+  width: 595.28px;
+  height: 841.89px;
+  background-color: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transform-origin: center center;
+  transition: transform 0.1s ease-out;
+  flex-shrink: 0;
+}
+
+#pdf-canvas, #grid-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+#grid-canvas {
+  z-index: 1;
+}
+
+.interactive-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  cursor: crosshair;
+}
+
+/* PIN MARKER (L-SYMBOL FOR BOTTOM-LEFT ORIGIN) */
+.click-pin-marker {
+  position: absolute;
+  pointer-events: none;
+  z-index: 50;
+  transform: translate(-2px, -2px); /* Vertex at (2,2) aligns precisely on clicked coordinate */
+}
+
+.pin-l-symbol {
+  overflow: visible;
+  filter: drop-shadow(0px 0px 4px rgba(16, 185, 129, 0.9));
+  animation: pulse-l-pin 1.5s infinite alternate;
+}
+
+@keyframes pulse-l-pin {
+  0% {
+    filter: drop-shadow(0px 0px 3px rgba(16, 185, 129, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0px 0px 8px rgba(16, 185, 129, 1));
+  }
+}
+
+.pin-coords-badge {
+  position: absolute;
+  top: 8px;
+  left: 26px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #10b981;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* FIELD OVERLAY ON PDF */
+.pdf-field-overlay {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: var(--danger-bg);
+  border: 2px dashed var(--danger);
+  border-radius: 2px;
+  cursor: move;
+  z-index: 10;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+}
+.pdf-field-overlay:hover {
+  border-color: #f87171;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+}
+.pdf-field-overlay.selected {
+  background-color: rgba(59, 130, 246, 0.25);
+  border-style: solid;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px #ffffff, 0 0 15px var(--primary-glow);
+  z-index: 20;
+}
+.pdf-field-overlay.selected .field-label-tag {
+  background-color: var(--primary);
+}
+
+/* LABEL AT TOP-RIGHT OF RECTANGLE */
+.pdf-field-overlay .field-label-tag {
+  position: absolute;
+  top: -18px;
+  right: 0;
+  background-color: var(--danger);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* SAMPLE TEXT RENDER CONTAINER */
+.pdf-field-overlay .sample-text-render {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: #0f172a;
+  white-space: pre;
+  overflow: hidden;
+  line-height: 1;
+  pointer-events: none;
+  font-weight: 600;
+}
+
+/* RIGHT SIDEBAR: FIELDS LIST */
+.fields-list-section {
+  flex: 0 0 auto;
+  max-height: 240px;
+  display: flex;
+  flex-direction: column;
+}
+.fields-list {
+  overflow-y: auto;
+  max-height: 180px;
+  padding: 4px;
+}
+.empty-fields-msg {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 16px 8px;
+  line-height: 1.4;
+}
+
+.fields-list-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.field-list-item {
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  transition: all 0.15s ease;
+}
+.field-list-item:hover {
+  background-color: var(--bg-card);
+  border-color: var(--border-focus);
+}
+.field-list-item.selected {
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: var(--primary);
+}
+
+.field-item-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.field-item-checkbox input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.field-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.field-item-prefix {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+.field-item-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.field-item-del {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+.field-item-del:hover {
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* RIGHT SIDEBAR: TOOLS SECTION */
+.tools-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.tools-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.active-field-badge {
+  font-size: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.no-selection-placeholder {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 30px 10px;
+}
+
+.tools-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tool-group {
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.tool-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  display: block;
+}
+.tool-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.badge-info {
+  font-size: 0.7rem;
+  background: var(--bg-card);
+  color: var(--primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.tool-help {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+
+.input-with-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tool-input-text,
+.input-with-toggle input[type="text"] {
+  width: 100%;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+  font-weight: 600;
+  transition: border-color 0.2s ease;
+}
+.tool-input-text:focus,
+.input-with-toggle input[type="text"]:focus {
+  border-color: var(--primary);
+}
+
+/* FONT SELECTOR */
+.font-selector-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+.font-preview {
+  font-size: 0.9rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* STEPPERS */
+.number-stepper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 3px 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.btn-step {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-step:hover {
+  background: var(--bg-card-hover);
+}
+.number-stepper input {
+  flex: 1;
+  min-width: 0;
+  width: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  text-align: center;
+  font-family: 'Fira Code', monospace;
+  font-weight: 600;
+  outline: none;
+  font-size: 0.85rem;
+  padding: 0 2px;
+}
+.number-stepper input::-webkit-outer-spin-button,
+.number-stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.number-stepper input[type=number] {
+  -moz-appearance: textfield;
+}
+.unit-tag {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding-left: 2px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* GROUPS & DISTANCES GRIDS */
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.group-input-box, .dist-input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 4px;
+}
+.group-input-box span, .dist-input-box span {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.group-input-box input, .dist-input-box input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  text-align: center;
+  font-family: 'Fira Code', monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.distances-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+/* FINE NUDGE CONTROLS */
+.nudge-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.nudge-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nudge-axis {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.nudge-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 3px;
+}
+.btn-nudge {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Fira Code', monospace;
+  cursor: pointer;
+}
+.btn-nudge:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.nudge-value,
+.nudge-input-val {
+  width: 70px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--accent);
+  text-align: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 3px 2px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.nudge-input-val:focus {
+  border-color: var(--primary);
+  background: var(--bg-sidebar);
+}
+
+.lock-coords-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-color);
+}
+.lock-check .toggle-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+.lock-check input:checked ~ .toggle-label {
+  color: var(--warning);
+}
+
+.action-group {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
