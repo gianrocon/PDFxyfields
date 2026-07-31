@@ -115,7 +115,7 @@ const server = http.createServer((req, res) => {
   // STATIC FILE SERVING
   if (pathname === '/') pathname = '/index.html';
 
-  let filePath = path.join(ROOT_DIR, pathname);
+  let filePath = path.join(ROOT_DIR, decodeURIComponent(pathname));
   
   // Prevent directory traversal
   if (!filePath.startsWith(ROOT_DIR)) {

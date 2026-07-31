@@ -6,6 +6,10 @@
  * - A4: 595.28 pt (Largura) x 841.89 pt (Altura) [210mm x 297mm]
  */
 
+// Tracks the last known values of the 4 group inputs, used to detect
+// increment/decrement clicks (native number spinner) vs. direct typing.
+let groupInputPrevValues = [null, null, null, null];
+
 // STATE MANAGEMENT
 const STATE = {
   pdfName: "formulario_a4.pdf",
@@ -270,6 +274,10 @@ function setupEventListeners() {
     if (!DOM.fieldLabelInput.value.trim()) {
       DOM.fieldLabelInput.value = `Campo_${STATE.fields.length + 1}`;
     }
+
+    // Focus the field name input so the user can type immediately
+    DOM.fieldLabelInput.focus();
+    DOM.fieldLabelInput.select();
   });
 
   // Create Field Button
@@ -531,10 +539,25 @@ function setupToolsEventListeners() {
     renderFields();
   });
 
-  // Group Inputs (Smart Remainder Logic)
+  // Group Inputs (Smart Remainder Logic for typing, Neighbor-Transfer Logic for +/- spinner clicks)
   const groupInputs = [DOM.group1Input, DOM.group2Input, DOM.group3Input, DOM.group4Input];
   groupInputs.forEach((input, index) => {
-    input.addEventListener('input', () => {
+    input.addEventListener('input', (e) => {
+      // Native number spinner clicks fire an 'input' event without inputType set,
+      // while real keyboard typing sets inputType (e.g. "insertText").
+      if (!e.inputType) {
+        const newRaw = input.value === '' ? 0 : (parseInt(input.value, 10) || 0);
+        const prevRaw = groupInputPrevValues[index] || 0;
+        const delta = newRaw > prevRaw ? 1 : (newRaw < prevRaw ? -1 : 0);
+        if (delta !== 0) {
+          if (!stepGroupValue(index, delta)) {
+            // No neighbor available to pull from / give to: revert the spinner change
+            const field = getActiveField();
+            if (field) groupInputsUpdateUI(field);
+          }
+          return;
+        }
+      }
       handleGroupInputChange(index);
     });
   });
@@ -582,6 +605,10 @@ function setupToolsEventListeners() {
       const field = getActiveField();
       if (!field) return;
       STATE.lockedX = e.target.checked ? field.x : null;
+      if (e.target.checked) {
+        STATE.lockedY = null;
+        if (DOM.chkLockY) DOM.chkLockY.checked = false;
+      }
     });
   }
 
@@ -590,6 +617,10 @@ function setupToolsEventListeners() {
       const field = getActiveField();
       if (!field) return;
       STATE.lockedY = e.target.checked ? field.y : null;
+      if (e.target.checked) {
+        STATE.lockedX = null;
+        if (DOM.chkLockX) DOM.chkLockX.checked = false;
+      }
     });
   }
 
@@ -716,7 +747,46 @@ function groupInputsUpdateUI(field) {
   for (let i = 0; i < 4; i++) {
     const val = raw[i];
     inputs[i].value = (val !== undefined && val !== null) ? val : '';
+    groupInputPrevValues[i] = (val !== undefined && val !== null) ? val : 0;
   }
+}
+
+// STEP A GROUP VALUE UP/DOWN BY 1, TRANSFERRING THE CHARACTER TO/FROM A NEIGHBOR
+// Increase: pulls 1 char from the group to the right; if none available, from the group to the left.
+// Decrease: gives 1 char to the group to the right; if none exists, to the group to the left.
+// Returns true if the transfer happened, false if no valid neighbor was available.
+function stepGroupValue(index, delta) {
+  const field = getActiveField();
+  if (!field) return false;
+
+  const inputs = [DOM.group1Input, DOM.group2Input, DOM.group3Input, DOM.group4Input];
+  let vals = inputs.map(inp => {
+    const p = parseInt(inp.value, 10);
+    return isNaN(p) || p < 0 ? 0 : p;
+  });
+
+  // Note: vals[index] already reflects the native spinner's change (browser updates
+  // the input's value before firing 'input'), so only the neighbor needs adjusting.
+  if (delta > 0) {
+    let donor = -1;
+    if (index + 1 <= 3 && vals[index + 1] > 0) donor = index + 1;
+    else if (index - 1 >= 0 && vals[index - 1] > 0) donor = index - 1;
+    if (donor === -1) return false;
+    vals[donor] -= 1;
+  } else {
+    let recipient = -1;
+    if (index + 1 <= 3) recipient = index + 1;
+    else if (index - 1 >= 0) recipient = index - 1;
+    if (recipient === -1) return false;
+    vals[recipient] += 1;
+  }
+
+  field.rawGroups = vals;
+  field.groups = vals;
+  groupInputsUpdateUI(field);
+  saveLocalStorage();
+  renderFields();
+  return true;
 }
 
 // NUDGE FIELD COORDINATES
@@ -1211,9 +1281,13 @@ function handlePdfFileUpload(e) {
 
       renderPdfPage(1);
 
-      // Auto-load paired JSON if stored in localStorage
-      loadLocalStorage();
-      renderFields();
+      // Auto-load paired JSON: try /maps/<name>.json first, fall back to localStorage
+      tryAutoLoadFromMaps(file.name).then(loadedFromMaps => {
+        if (!loadedFromMaps) {
+          loadLocalStorage();
+          renderFields();
+        }
+      });
     });
   };
   abReader.readAsArrayBuffer(file);
@@ -1311,6 +1385,34 @@ function triggerBrowserDownload(jsonOutput) {
   downloadAnchor.remove();
 }
 
+function applyJsonFieldsData(data) {
+  if (!data.fields || !Array.isArray(data.fields)) return false;
+
+  STATE.fields = data.fields.map(f => ({
+    id: f.id || 'field_' + Date.now(),
+    label: f.label || 'Campo',
+    x: f.x || 0,
+    y: f.y || 0,
+    length: f.length || 10,
+    fontSize: f.fontSize || 12.0,
+    fontFamily: f.fontFamily || 'Courier New',
+    sampleText: f.sampleText || f.label,
+    showSampleText: !!f.showSampleText,
+    letterSpacing: f.letterSpacingPt !== undefined ? f.letterSpacingPt : (f.letterSpacing || 0.0),
+    rawGroups: f.rawGroups || f.groups || [f.length],
+    groups: f.groups || [f.length],
+    groupDistances: f.groupDistancesPt !== undefined ? f.groupDistancesPt : (f.groupDistances || []),
+    height: f.heightPt || f.fontSize || 12.0,
+    visible: f.visible !== undefined ? f.visible : true
+  }));
+
+  STATE.activeFieldId = STATE.fields.length > 0 ? STATE.fields[0].id : null;
+  saveLocalStorage();
+  renderFields();
+  updateToolsPanel();
+  return true;
+}
+
 function handleJsonImport(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -1319,29 +1421,7 @@ function handleJsonImport(e) {
   reader.onload = function(evt) {
     try {
       const data = JSON.parse(evt.target.result);
-      if (data.fields && Array.isArray(data.fields)) {
-        STATE.fields = data.fields.map(f => ({
-          id: f.id || 'field_' + Date.now(),
-          label: f.label || 'Campo',
-          x: f.x || 0,
-          y: f.y || 0,
-          length: f.length || 10,
-          fontSize: f.fontSize || 12.0,
-          fontFamily: f.fontFamily || 'Courier New',
-          sampleText: f.sampleText || f.label,
-          showSampleText: !!f.showSampleText,
-          letterSpacing: f.letterSpacingPt !== undefined ? f.letterSpacingPt : (f.letterSpacing || 0.0),
-          rawGroups: f.rawGroups || f.groups || [f.length],
-          groups: f.groups || [f.length],
-          groupDistances: f.groupDistancesPt !== undefined ? f.groupDistancesPt : (f.groupDistances || []),
-          height: f.heightPt || f.fontSize || 12.0,
-          visible: f.visible !== undefined ? f.visible : true
-        }));
-
-        STATE.activeFieldId = STATE.fields.length > 0 ? STATE.fields[0].id : null;
-        saveLocalStorage();
-        renderFields();
-        updateToolsPanel();
+      if (applyJsonFieldsData(data)) {
         alert(`Sucesso: ${STATE.fields.length} campos carregados do JSON!`);
       }
     } catch (err) {
@@ -1349,6 +1429,26 @@ function handleJsonImport(e) {
     }
   };
   reader.readAsText(file);
+}
+
+// Try to auto-load a JSON schema saved in /maps/ with the same base name as the PDF
+function tryAutoLoadFromMaps(pdfFileName) {
+  const baseName = pdfFileName.replace(/\.pdf$/i, '');
+  const url = `/maps/${encodeURIComponent(baseName)}.json`;
+
+  return fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error('not found');
+      return res.json();
+    })
+    .then(data => {
+      const loaded = applyJsonFieldsData(data);
+      if (loaded) {
+        console.log(`[PDFxyfields] JSON carregado automaticamente de maps/: ${baseName}.json`);
+      }
+      return loaded;
+    })
+    .catch(() => false);
 }
 
 // LOCALSTORAGE PERSISTENCE

@@ -374,6 +374,425 @@
       "sampleText": "M",
       "showSampleText": true,
       "visible": true
+    },
+    {
+      "id": "field_1785465338434",
+      "label": "dt_nasc_pac",
+      "x": 21.6,
+      "y": 536.2,
+      "length": 10,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        10,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        10
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 72,
+      "sampleText": "31/10/1981",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465377256",
+      "label": "raca_cor",
+      "x": 143.6,
+      "y": 539.3,
+      "length": 1,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        1,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        1
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 7.2,
+      "sampleText": "2",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465424561",
+      "label": "nome_mae",
+      "x": 366.6,
+      "y": 536.2,
+      "length": 29,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        29,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        29
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 208.8,
+      "sampleText": "REGINA LUCIA DONATO ROCCON",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465487726",
+      "label": "nasc",
+      "x": 21.6,
+      "y": 502.9,
+      "length": 15,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        15,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        15
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 108,
+      "sampleText": "BRASILEIRO",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465548526",
+      "label": "logradouro",
+      "x": 243.4,
+      "y": 501.5,
+      "length": 46,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        46,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        46
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 331.2,
+      "sampleText": "RUA DOUTOR OTAVIO TORRES",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465614236",
+      "label": "num",
+      "x": 21.6,
+      "y": 470.9,
+      "length": 4,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        4,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        4
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 28.8,
+      "sampleText": "1575",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465639299",
+      "label": "complemento",
+      "x": 75.8,
+      "y": 470.9,
+      "length": 8,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        8,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        8
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 57.6,
+      "sampleText": "apt1023",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465672835",
+      "label": "bairro",
+      "x": 141.9,
+      "y": 470.9,
+      "length": 13,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        13,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        13
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 93.6,
+      "sampleText": "GRAÇA",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465724041",
+      "label": "cidade",
+      "x": 242.7,
+      "y": 470.9,
+      "length": 15,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        15,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        15
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 108,
+      "sampleText": "GUANAMBI",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465750958",
+      "label": "uf",
+      "x": 424.9,
+      "y": 469.5,
+      "length": 2,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        2,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        2
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 14.4,
+      "sampleText": "BA",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465796035",
+      "label": "cep",
+      "x": 478.5,
+      "y": 469.5,
+      "length": 8,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        8,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        8
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 57.6,
+      "sampleText": "40296210",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465826213",
+      "label": "ddd",
+      "x": 20.9,
+      "y": 437.5,
+      "length": 11,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        2,
+        9,
+        0,
+        0
+      ],
+      "groups": [
+        2,
+        9
+      ],
+      "groupDistancesPt": [
+        8
+      ],
+      "heightPt": 12,
+      "widthPt": 87.2,
+      "sampleText": "71991194254",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465903903",
+      "label": "pais",
+      "x": 156.8,
+      "y": 437.5,
+      "length": 2,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        2,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        2
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 14.4,
+      "sampleText": "BR",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785465942116",
+      "label": "gest",
+      "x": 297.7,
+      "y": 436.8,
+      "length": 1,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        1,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        1
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 7.2,
+      "sampleText": "1",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785466002189",
+      "label": "ig",
+      "x": 365.5,
+      "y": 436.8,
+      "length": 1,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        1,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        1
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 7.2,
+      "sampleText": "5",
+      "showSampleText": true,
+      "visible": true
+    },
+    {
+      "id": "field_1785466049544",
+      "label": "motivo",
+      "x": 34.1,
+      "y": 315.1,
+      "length": 1,
+      "fontSize": 12,
+      "fontFamily": "Space Mono",
+      "charWidthPt": 7.199999999999999,
+      "letterSpacingPt": 0,
+      "rawGroups": [
+        1,
+        null,
+        null,
+        null
+      ],
+      "groups": [
+        1
+      ],
+      "groupDistancesPt": [],
+      "heightPt": 12,
+      "widthPt": 7.2,
+      "sampleText": "5",
+      "showSampleText": true,
+      "visible": true
     }
   ]
 }

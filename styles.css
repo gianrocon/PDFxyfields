@@ -542,7 +542,7 @@ body.dark-theme {
   overflow: hidden;
   line-height: 1;
   pointer-events: none;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 /* RIGHT SIDEBAR: FIELDS LIST */
